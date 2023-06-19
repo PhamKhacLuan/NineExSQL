@@ -1,0 +1,18 @@
+// Sử dụng lệnh truy vấn SQL lấy ra mã số và tên các đề tài có nhiều hơn 2 sinh viên tham gia thực tập .
+SELECT detai.madt,detai.tendt
+FROM detai
+WHERE detai.madt IN (
+SELECT huongdan.madt
+FROM huongdan 
+GROUP BY huongdan.madt
+HAVING COUNT(huongdan.madt) > 2)
+
+//Sử dụng câu lệnh truy vấn SQL lấy ra mã số, tên đề tài của đề tài có kinh phí cao nhất .
+SELECT madt,tendt FROM detai
+WHERE detai.kinhphi = (SELECT Max(kinhphi) AS maxkinhphi FROM detai)
+
+// Sử dụng câu lệnh SQL xuất ra Tên khoa, Số lượng sinh viên của mỗi khoa.
+SELECT khoa.tenkhoa, COUNT(sinhvien.makhoa) AS SoLuongSinhVien FROM sinhvien
+JOIN khoa 
+ON sinhvien.makhoa = khoa.makhoa 
+GROUP BY khoa.tenkhoa
